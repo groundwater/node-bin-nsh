@@ -1,5 +1,7 @@
 # No(de) Shell
 
+<a href="https://nodeos.github.io"><img src="http://i.imgur.com/pIJu2TS.png" width=200 height=79/></a>
+
 Both **no shell** or **node shell** accurately describe `nsh`.
 
 The goal of `nsh` is to provide a basic shell that will run without having `bash` or another process tidy things up first.
