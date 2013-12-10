@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 
+var rl     = require('readline');
 var cp     = require('child_process');
 
 process.on('uncaughtException', function(err) {
   console.log(err);
 });
 
-process.stdin.setEncoding('utf8');
-process.stdin.on('data', readline );
+var iface = rl.createInterface({
+  input  : process.stdin,
+  output : process.stdout
+});
 
 function readline(line){
   line = interpolate( line.trim(), process.env );
@@ -29,14 +32,6 @@ function readline(line){
 
 process.on('close',function(){
   process.exit(0);
-});
-
-// we ignore SIGINT because we are lazy, 
-// and it gets 90% of our needs with 10% of the effort
-// when we do proper job-control, we can begin catching this signal
-// or even put STDIN into raw mode
-process.on('SIGINT',function(){
-  //
 });
 
 function interpolate(string,replace){
@@ -95,7 +90,9 @@ function run(line){
 }
 
 function prompt(prefix){
-  process.stdout.write( process.cwd() + " # " );
+  iface.question("# ", function (line) {
+    readline(line);
+  });
 }
 
 // Main method
