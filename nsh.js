@@ -12,6 +12,10 @@ var iface = rl.createInterface({
   output : process.stdout
 });
 
+iface.on('close', function () {
+  process.stdout.write('^D\n');
+});
+
 function readline(line){
   line = interpolate( line.trim(), process.env );
   if(line && line.length > 0) {
@@ -71,7 +75,7 @@ function run(line){
   // Have this shell resume control after the sub-process exists
   function res(){
     process.stdin.resume();
-    prompt();    
+    prompt();
   }
   
   // catch exit code
@@ -89,8 +93,9 @@ function run(line){
   
 }
 
-function prompt(prefix){
-  iface.question("# ", function (line) {
+function prompt(){
+  var prefix = process.cwd();
+  iface.question(prefix + " # ", function (line) {
     readline(line);
   });
 }
