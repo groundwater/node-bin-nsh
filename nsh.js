@@ -112,7 +112,12 @@ function run(line){
 }
 
 function prompt(){
-  var prefix = process.cwd();
+  var prefix;
+  try {
+    prefix = process.cwd();
+  } else {
+    prefix = "(none)";
+  }
   iface.question(prefix + " # ", function (line) {
     readline(line);
   });
