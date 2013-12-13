@@ -115,7 +115,7 @@ function prompt(){
   var prefix;
   try {
     prefix = process.cwd();
-  } else {
+  } catch (e) {
     prefix = "(none)";
   }
   iface.question(prefix + " # ", function (line) {
