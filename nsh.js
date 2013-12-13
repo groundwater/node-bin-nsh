@@ -2,6 +2,7 @@
 
 var rl     = require('readline');
 var cp     = require('child_process');
+var parse  = require('lib-cmdparse');
 
 process.on('uncaughtException', function(err) {
   console.log(err);
@@ -16,14 +17,26 @@ iface.on('close', function () {
   process.stdout.write('^D\n');
 });
 
+iface.on('SIGINT', function () {
+  process.stdout.write('^C\n');
+  prompt();
+});
+
 function readline(line){
   line = interpolate( line.trim(), process.env );
   if(line && line.length > 0) {
     if(line.substring(0,2)=='cd'){
-      // 'cd' command
+      // cd is a native command
       var dir = line.substring(2).trim();
       if(dir.length==0) dir=process.env.HOME;
-      process.chdir(dir);
+
+      // should not crash process with a bad 'cd'
+      try {
+        process.chdir(dir);
+      } catch (e) {
+        console.log(e);
+      }
+
       setImmediate(prompt);
     }else{
       // other commands
@@ -53,19 +66,24 @@ function interpolate(string,replace){
 
 function run(line){
   
+  // allow for setting environment variables
+  // on the command line
+  var stanza = parse(line);
+
+  // fallback to current environment
+  stanza.envs.__proto__ = process.env;
+
   // We must stop reading STDIN because we will soon
   // be the background process group, which will raise
   // errors when attempting to read/write to the TTY driver
   process.stdin.pause();
   
   // Sub-Process
-  var args = line.split(/\s+/);
-  var exec = args.shift();
+  var args = stanza.args;
+  var exec = stanza.exec;
   var proc = cp.spawn(exec,args,{
-    
-    // Inherit process working directory and environment
     cwd: process.cwd(),
-    env: process.env,
+    env: stanza.envs,
     
     // Inerit the terminal
     stdio: 'inherit'
