@@ -1,43 +1,70 @@
 #!/usr/bin/env node
 
-var glob   = require("glob");
+var fs     = require('fs');
+var glob   = require('glob');
 var rl     = require('readline');
 var cp     = require('child_process');
 var parse  = require('lib-cmdparse');
 
-process.on('uncaughtException', function(err) {
-  console.log(err);
-});
+var state  = {
+  "?" : null
+}
 
+// auto-complete handler
 function completer (item, callback) {
   var gl = item.split(/\s+/).pop();
-  glob(gl + "*", function (err, arr) {
-    callback(null, [arr, gl]);
+
+  // auto complete line should only show files from
+  // top-most directory
+  // i.e. a b c
+  // vs.  x/a x/b x/c
+  var dirs = gl.split('/');
+  var file = dirs.pop();
+  
+  glob(file + "*", {cwd: dirs.join('/')}, function (err, arr) {
+
+    // if there is only one directory returned by the tab-complete
+    // automatically append a / to the end of it
+    if (arr.length === 1) {
+      try {
+        if (fs.statSync(arr[0]).isDirectory())
+          arr[0] = arr[0] + '/';
+      } catch (_) {
+        // 
+      }
+    }
+
+    callback(null, [arr, file]);
   });
 }
 
 var iface = rl.createInterface({
-  input  : process.stdin,
-  output : process.stdout,
-  completer: completer
+  input     : process.stdin,
+  output    : process.stdout,
+  completer : completer
 });
 
+// visually indicate closed pipe with ^D
+// otherwise exiting nested shells is confusing
 iface.on('close', function () {
   process.stdout.write('^D\n');
 });
 
+// handle ^C like bash
 iface.on('SIGINT', function () {
   process.stdout.write('^C\n');
   prompt();
 });
 
 function readline(line){
-  line = interpolate( line.trim(), process.env );
-  if(line && line.length > 0) {
-    if(line.substring(0,2)=='cd'){
+  line = interpolate(line.trim(), process.env);
+  line = interpolate(line, state);
+
+  if (line && line.length > 0) {
+    if (line.substring(0,2) === 'cd'){
       // cd is a native command
       var dir = line.substring(2).trim();
-      if(dir.length==0) dir=process.env.HOME;
+      if (dir.length === 0) dir=process.env.HOME;
 
       // should not crash process with a bad 'cd'
       try {
@@ -51,7 +78,7 @@ function readline(line){
       // other commands
       run(line);
     }
-  }else{
+  } else {
     setImmediate(prompt);
   }
 }
@@ -60,21 +87,23 @@ process.on('close',function(){
   process.exit(0);
 });
 
-function interpolate(string,replace){
-  return string.replace(/\$\w+/g,function(key){
+// replace $VARs with environment variables
+function interpolate(string, replace){
+  return string.replace(/\$[^\s]+/g, function (key){
     var name = key.substring(1);
+    
     var out;
-    if(replace[name]){
+    if(replace[name] || replace[name] === 0){
       out = replace[name];
     } else { 
       out = key;
     }
+
     return out;
   });
 }
 
-function run(line){
-  
+function run(line){  
   // allow for setting environment variables
   // on the command line
   var stanza = parse(line);
@@ -96,7 +125,6 @@ function run(line){
     
     // Inerit the terminal
     stdio: 'inherit'
-    
   });
   
   // Have this shell resume control after the sub-process exists
@@ -106,7 +134,11 @@ function run(line){
   }
   
   // catch exit code
-  function end(code,signal){
+  function end(code, signal){
+    // the $? variable should contain the exit code
+    state["?"] = code;
+    state["??"] = signal;
+
     res();
   }
   
@@ -115,9 +147,8 @@ function run(line){
     res();
   }
   
-  proc.on('error',err);
-  proc.on('exit',end);
-  
+  proc.on('error', err);
+  proc.on('exit', end); 
 }
 
 function prompt(){
