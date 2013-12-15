@@ -11,6 +11,25 @@ var state  = {
   "?" : null
 }
 
+var execinfo_path = process.env.PATH.split(':');
+function execinfo(info, matches) {
+  var matches = matches || [];
+  execinfo_path.forEach(function (bindir) {
+    try {
+      fs.readdirSync(bindir).forEach(function (bin) {
+        var slice = bin.substring(0, info.length);
+        if (slice.length > 0 && slice === info) {
+          matches.push(bin);
+        }
+      });
+    } catch (e) {
+      // continue
+    }
+  });
+  return matches;
+}
+
+// given a string path, return base and dirname
 function pathinfo(info) {
   var out = {
     absolute : false,
@@ -28,13 +47,19 @@ function pathinfo(info) {
 
 // auto-complete handler
 function completer (item, callback) {
-  
+
   // grab the last space-separated segment on the line
-  var info = pathinfo(item);
-  
+  var splt = item.split(/\s+/);
+  var last = splt.pop();
+  var info = pathinfo(last);
+
   glob(info.basename + "*", {cwd: info.pathname}, function (err, arr) {
     // if there is only one directory returned by the tab-complete
     // automatically append a / to the end of it
+    if (splt.length === 0) {
+      arr = execinfo(last, arr);
+    }
+
     if (arr.length === 1) {
       try {
         if (fs.statSync(path.join(info.pathname, arr[0])).isDirectory())
@@ -44,7 +69,7 @@ function completer (item, callback) {
       }
     }
 
-    callback(null, [arr, info.basename]);
+    callback(null, [arr, last]);
   });
 }
 
