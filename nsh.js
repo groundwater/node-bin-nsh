@@ -2,6 +2,7 @@
 
 var fs     = require('fs');
 var glob   = require('glob');
+var path   = require('path');
 var rl     = require('readline');
 var cp     = require('child_process');
 var parse  = require('lib-cmdparse');
@@ -10,31 +11,40 @@ var state  = {
   "?" : null
 }
 
+function pathinfo(info) {
+  var out = {
+    absolute : false,
+    pathname : '',
+    basename : ''
+  };
+  if (info[0] === '/') out.absolute = true;
+  if (info[info.length - 1] === '/') out.pathname = info;
+  else {
+    out.pathname = path.dirname(info);
+    out.basename = path.basename(info);
+  }
+  return out;
+}
+
 // auto-complete handler
 function completer (item, callback) {
-  var gl = item.split(/\s+/).pop();
-
-  // auto complete line should only show files from
-  // top-most directory
-  // i.e. a b c
-  // vs.  x/a x/b x/c
-  var dirs = gl.split('/');
-  var file = dirs.pop();
   
-  glob(file + "*", {cwd: dirs.join('/')}, function (err, arr) {
-
+  // grab the last space-separated segment on the line
+  var info = pathinfo(item);
+  
+  glob(info.basename + "*", {cwd: info.pathname}, function (err, arr) {
     // if there is only one directory returned by the tab-complete
     // automatically append a / to the end of it
     if (arr.length === 1) {
       try {
-        if (fs.statSync(arr[0]).isDirectory())
+        if (fs.statSync(path.join(info.pathname, arr[0])).isDirectory())
           arr[0] = arr[0] + '/';
       } catch (_) {
         // 
       }
     }
 
-    callback(null, [arr, file]);
+    callback(null, [arr, info.basename]);
   });
 }
 
