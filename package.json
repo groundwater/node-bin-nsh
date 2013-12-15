@@ -8,6 +8,7 @@
     "nsh": "nsh.js"
   },
   "dependencies": {
-    "lib-cmdparse": "~0.1.0"
+    "lib-cmdparse": "~0.1.0",
+    "glob": "~3.2.7"
   }
 }

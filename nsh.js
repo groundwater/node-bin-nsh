@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var glob   = require("glob");
 var rl     = require('readline');
 var cp     = require('child_process');
 var parse  = require('lib-cmdparse');
@@ -8,9 +9,17 @@ process.on('uncaughtException', function(err) {
   console.log(err);
 });
 
+function completer (item, callback) {
+  var gl = item.split(/\s+/).pop();
+  glob(gl + "*", function (err, arr) {
+    callback(null, [arr, gl]);
+  });
+}
+
 var iface = rl.createInterface({
   input  : process.stdin,
-  output : process.stdout
+  output : process.stdout,
+  completer: completer
 });
 
 iface.on('close', function () {
