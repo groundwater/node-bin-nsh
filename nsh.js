@@ -21,14 +21,33 @@ function completer (line, callback) {
   var item  = split.pop();
   var outs  = [];
 
-  if (!item) return callback(1);
+  // avoid crazy auto-completions when the line is empty
+  if (!line) return callback(1);
 
-  if (split.length === 0) ps(item, execinfo_path, function (err, execs) {
+  // user is attempting to type a relative directory
+  var is_rel   = item[0] === '.';
+
+  // user is typing first command
+  var is_first = split.length === 0;
+
+  // if this is the first token on the line
+  // autocomplete it against commands in the search path
+  if (!is_rel && is_first) ps(item, execinfo_path, function (err, execs) {
+    // if there is only one executable, append a space after it
+    if (execs.length === 1) execs[0] = execs[0] + ' ';
     callback(err, [execs, item]);
   });
 
+  // if this is 
   else pc(item, function (err, arr, info) {
-    callback(err, [arr, info.file]);
+    // if there is only one completion, and it's a directory
+    // automatically append a '/' to the completion
+    if (arr.length === 1) {
+      if (fs.statSync(info.dir + arr[0]).isDirectory()) 
+        callback(err, [[arr[0] + '/'], info.file]);
+      else callback(err, [arr, info.file]);
+    }
+    else callback(err, [arr, info.file]);
   });
 
 }
