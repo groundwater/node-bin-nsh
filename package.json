@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "lib-cmdparse": "~0.1.0",
-    "glob": "~3.2.7"
+    "glob": "~3.2.7",
+    "lib-pathcomplete": "0.0.1",
+    "lib-pathsearch": "~0.1.0"
   }
 }
