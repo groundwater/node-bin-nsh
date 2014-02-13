@@ -67,6 +67,7 @@ iface.on('close', function () {
 // handle ^C like bash
 iface.on('SIGINT', function () {
   process.stdout.write('^C\n');
+  iface.clearLine();
   prompt();
 });
 
