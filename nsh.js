@@ -38,12 +38,12 @@ function completer (line, callback) {
     callback(err, [execs, item]);
   });
 
-  // if this is 
+  // if this is
   else pc(item, function (err, arr, info) {
     // if there is only one completion, and it's a directory
     // automatically append a '/' to the completion
     if (arr.length === 1) {
-      if (fs.statSync(info.dir + arr[0]).isDirectory()) 
+      if (fs.statSync(info.dir + arr[0]).isDirectory())
         callback(err, [[arr[0] + '/'], info.file]);
       else callback(err, [arr, info.file]);
     }
@@ -69,6 +69,10 @@ iface.on('SIGINT', function () {
   process.stdout.write('^C');
   iface.clearLine();
   prompt();
+});
+
+process.on('SIGINT', function () {
+  // ignore
 });
 
 function readline(line){
@@ -106,11 +110,11 @@ process.on('close',function(){
 function interpolate(string, replace){
   return string.replace(/\$[^\s]+/g, function (key){
     var name = key.substring(1);
-    
+
     var out;
     if(replace[name] || replace[name] === 0){
       out = replace[name];
-    } else { 
+    } else {
       out = key;
     }
 
@@ -118,7 +122,7 @@ function interpolate(string, replace){
   });
 }
 
-function run(line){  
+function run(line){
   // allow for setting environment variables
   // on the command line
   var stanza = parse(line);
@@ -129,25 +133,27 @@ function run(line){
   // We must stop reading STDIN because we will soon
   // be the background process group, which will raise
   // errors when attempting to read/write to the TTY driver
+  process.stdin.setRawMode(false)
   process.stdin.pause();
-  
+
   // Sub-Process
   var args = stanza.args;
   var exec = stanza.exec;
   var proc = cp.spawn(exec,args,{
     cwd: process.cwd(),
     env: stanza.envs,
-    
+
     // Inerit the terminal
     stdio: 'inherit'
   });
-  
+
   // Have this shell resume control after the sub-process exists
   function res(){
+    process.stdin.setRawMode(true)
     process.stdin.resume();
     prompt();
   }
-  
+
   // catch exit code
   function end(code, signal){
     // the $? variable should contain the exit code
@@ -156,14 +162,14 @@ function run(line){
 
     res();
   }
-  
+
   // catch errors
   function err(err){
     res();
   }
-  
+
   proc.on('error', err);
-  proc.on('exit', end); 
+  proc.on('exit', end);
 }
 
 function prompt(){
