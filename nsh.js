@@ -185,6 +185,4 @@ function prompt(){
 }
 
 // Main method
-if(!module.parent){
-  prompt();
-}
+prompt();
