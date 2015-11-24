@@ -4,8 +4,9 @@
   "description": "Node/No Shell",
   "author": "Jacob Groundwater <groundwater@gmail.com>",
   "license": "MIT",
+  "main": "lib",
   "bin": {
-    "nsh": "nsh.js"
+    "nsh": "bin/nsh.js"
   },
   "dependencies": {
     "async": "^0.9.0",
