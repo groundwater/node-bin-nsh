@@ -10,14 +10,15 @@ var ast2js    = require('./lib/ast2js').command
 var completer = require('./lib/completer')
 
 
+function noop(){}
+
 function execCommand(command, callback)
 {
   ast2js(command, function(error, command)
   {
     if(error) return callback(error)
 
-    var stdin = new Readable()
-        stdin._read = function(){}
+    var stdin = new Readable({read: noop})
     var push = stdin.push.bind(stdin)
 
     stdin.pipe(command).pipe(process.stdout)
