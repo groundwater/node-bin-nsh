@@ -6,7 +6,8 @@ var Readable        = require('stream').Readable
 var eachSeries = require('async').eachSeries
 var parse      = require('shell-parse')
 
-var ast2js = require('./lib/ast2js').command
+var ast2js    = require('./lib/ast2js').command
+var completer = require('./lib/completer')
 
 
 function execCommand(command, callback)
@@ -39,7 +40,7 @@ var rl = createInterface(
 {
   input: process.stdin,
   output: process.stdout,
-//  completer:
+  completer: completer
 })
 
 
