@@ -1,20 +1,23 @@
 {
   "name": "bin-nsh",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Node/No Shell",
   "author": "Jacob Groundwater <groundwater@gmail.com>",
+  "contributors": [
+    "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>"
+  ],
   "license": "MIT",
   "main": "lib",
   "bin": {
-    "nsh": "bin/nsh.js"
+    "nsh": "server.js"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "glob": "~3.2.7",
-    "lib-cmdparse": "~0.1.0",
+    "async": "^1.5.2",
+    "glob": "~6.0.4",
     "lib-pathcomplete": "0.0.1",
     "lib-pathsearch": "~0.1.0",
-    "mkdirp": "~0.3.5",
-    "npm-path": "^1.0.2"
+    "mkdirp": "~0.5.1",
+    "npm-path": "^1.0.2",
+    "shell-parse": "0.0.2"
   }
 }
