@@ -18,18 +18,19 @@ function execCommand(command, callback)
   {
     if(error) return callback(error)
 
+    var input  = rl.input
+    var output = rl.output
+
     var stdin = new Readable({read: noop})
     var push = stdin.push.bind(stdin)
 
-    stdin.pipe(command).pipe(process.stdout)
-
-    process.stdin.on('data', push)
+    stdin.pipe(command).pipe(output)
+    input.on('data', push)
 
     command.on('close', function(code)
     {
-      process.stdin.removeListener('data', push)
-
-      stdin.unpipe(command).unpipe(process.stdout)
+      input.removeListener('data', push)
+      stdin.unpipe(command).unpipe(output)
 
       callback(code)
     })
