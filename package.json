@@ -15,9 +15,9 @@
     "async": "^1.5.2",
     "glob": "~6.0.4",
     "lib-pathcomplete": "0.0.1",
-    "lib-pathsearch": "~0.1.0",
+    "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
-    "npm-path": "^1.0.2",
+    "npm-path": "piranna/npm-path",
     "shell-parse": "0.0.2"
   }
 }

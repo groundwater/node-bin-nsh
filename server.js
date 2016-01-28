@@ -9,11 +9,15 @@ var parse      = require('shell-parse')
 var ast2js    = require('./lib/ast2js').command
 var completer = require('./lib/completer')
 
+var npmPath = require('npm-path').bind(null, {env:{PATH:process.env.PATH}})
+
 
 function noop(){}
 
 function execCommand(command, callback)
 {
+  npmPath()
+
   ast2js(command, function(error, command)
   {
     if(error) return callback(error)
