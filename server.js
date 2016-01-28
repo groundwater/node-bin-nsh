@@ -6,7 +6,7 @@ var Readable        = require('stream').Readable
 var eachSeries = require('async').eachSeries
 var parse      = require('shell-parse')
 
-var ast2js    = require('./lib/ast2js').command
+var ast2js    = require('./lib/ast2js')
 var completer = require('./lib/completer')
 
 var npmPath = require('npm-path').bind(null, {env:{PATH:process.env.PATH}})
@@ -21,6 +21,8 @@ function execCommand(command, callback)
   ast2js(command, function(error, command)
   {
     if(error) return callback(error)
+
+    if(command == null) return callback()
 
     var input  = rl.input
     var output = rl.output
