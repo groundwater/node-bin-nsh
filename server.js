@@ -27,7 +27,7 @@ function execCommand(command, callback)
     stdin.pipe(command).pipe(output)
     input.on('data', push)
 
-    command.on('close', function(code)
+    command.on('end', function(code)
     {
       input.removeListener('data', push)
       stdin.unpipe(command).unpipe(output)
