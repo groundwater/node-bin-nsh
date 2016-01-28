@@ -38,6 +38,12 @@ function execCommand(command, callback)
 
       callback(code)
     })
+    .on('error', function(error)
+    {
+      if(error.code !== 'ENOENT') throw error
+
+      console.error(error.path+': not found')
+    })
   })
 }
 
