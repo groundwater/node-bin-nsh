@@ -27,7 +27,8 @@ function execCommand(command, callback)
     var input  = rl.input
     var output = rl.output
 
-    var stdin = new Readable({read: noop})
+    var stdin = new Readable()
+        stdin._read = noop
     var push = stdin.push.bind(stdin)
 
     stdin.pipe(command).pipe(output)
