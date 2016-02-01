@@ -101,3 +101,11 @@ rl.on('line', function(line)
 
   eachSeries(ast, execCommand, prompt)
 })
+
+rl.on('SIGINT', function()
+{
+  this.write('^C')
+  this.clearLine()
+
+  prompt()
+})
