@@ -1,54 +1,11 @@
 #!/usr/bin/env node
 
 var createInterface = require('readline').createInterface
-var Readable        = require('stream').Readable
 
 var eachSeries = require('async').eachSeries
 var parse      = require('shell-parse')
 
-var ast2js    = require('./lib/ast2js')
 var completer = require('./lib/completer')
-
-var npmPath = require('npm-path').bind(null, {env:{PATH:process.env.PATH}})
-
-
-function noop(){}
-
-function execCommand(command, callback)
-{
-  npmPath()
-
-  ast2js(command, function(error, command)
-  {
-    if(error) return callback(error)
-
-    if(command == null) return callback()
-
-    var input  = rl.input
-    var output = rl.output
-
-    var stdin = new Readable()
-        stdin._read = noop
-    var push = stdin.push.bind(stdin)
-
-    stdin.pipe(command).pipe(output)
-    input.on('data', push)
-
-    command.on('end', function(code)
-    {
-      input.removeListener('data', push)
-      stdin.unpipe(command).unpipe(output)
-
-      callback(code)
-    })
-    .on('error', function(error)
-    {
-      if(error.code !== 'ENOENT') throw error
-
-      console.error(error.path+': not found')
-    })
-  })
-}
 
 
 var rl = createInterface(
@@ -57,6 +14,8 @@ var rl = createInterface(
   output: process.stdout,
   completer: completer
 })
+
+var execCommand = require('./lib/execCommand').bind(null, rl)
 
 
 var input = ''
