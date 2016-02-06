@@ -2,10 +2,10 @@
 
 var createInterface = require('readline').createInterface
 
-var eachSeries = require('async').eachSeries
-var parse      = require('shell-parse')
+var parse = require('shell-parse')
 
-var completer = require('./lib/completer')
+var completer    = require('./lib/completer')
+var execCommands = require('./lib/ast2js/_execCommands')
 
 
 var rl = createInterface(
@@ -14,8 +14,6 @@ var rl = createInterface(
   output: process.stdout,
   completer: completer
 })
-
-var execCommand = require('./lib/execCommand').bind(null, rl)
 
 
 var input = ''
@@ -58,7 +56,12 @@ rl.on('line', function(line)
     }
   }
 
-  eachSeries(ast, execCommand, prompt)
+  execCommands(this, ast, function(error)
+  {
+    if(error) console.error(error)
+
+    prompt()
+  })
 })
 
 rl.on('SIGINT', function()
