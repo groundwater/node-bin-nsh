@@ -37,6 +37,13 @@ function prompt(smallPrompt)
   rl.prompt()
 }
 
+function onError(error)
+{
+  console.error(error)
+
+  return prompt()
+}
+
 
 prompt()
 
@@ -48,26 +55,27 @@ rl.on('line', function(line)
 
   try
   {
-    var ast = parse(input)
+    var commands = parse(input)
   }
-  catch(err)
+  catch(error)
   {
-    if(err.constructor !== parse.SyntaxError) throw err
+    if(error.constructor !== parse.SyntaxError) return onError(error)
 
-    line = input.slice(err.offset)
+    line = input.slice(error.offset)
 
     try
     {
       parse(line, 'continuationStart')
-      return prompt(true)
     }
-    catch(err)
+    catch(error)
     {
-      throw err
+      return onError(error)
     }
+
+    return prompt(true)
   }
 
-  execCommands(this, ast, function(error)
+  execCommands(this, commands, function(error)
   {
     if(error) console.error(error)
 
