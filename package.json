@@ -12,6 +12,7 @@
     "nsh": "server.js"
   },
   "dependencies": {
+    "array-flatten": "^2.0.0",
     "async": "^1.5.2",
     "decode-prompt": "0.0.2",
     "glob": "~6.0.4",
