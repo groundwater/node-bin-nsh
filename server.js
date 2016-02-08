@@ -2,9 +2,11 @@
 
 var createInterface = require('readline').createInterface
 
-var parse = require('shell-parse')
+var decode = require('decode-prompt')
+var parse  = require('shell-parse')
 
 var completer    = require('./lib/completer')
+var environment  = require('./lib/ast2js/_environment')
 var execCommands = require('./lib/ast2js/_execCommands')
 
 
@@ -20,9 +22,18 @@ var input = ''
 
 function prompt(smallPrompt)
 {
-  input = ''
+  if(smallPrompt)
+    var ps = environment.get('PS2')
 
-  rl.setPrompt(smallPrompt ? '> ' : process.cwd()+'> ')
+  else
+  {
+    input = ''
+
+    var ps = environment.get('PS1')
+  }
+
+  rl.setPrompt(decode(ps, {env: process.env}))
+
   rl.prompt()
 }
 

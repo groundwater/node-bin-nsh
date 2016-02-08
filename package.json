@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "async": "^1.5.2",
+    "decode-prompt": "0.0.2",
     "glob": "~6.0.4",
     "lib-pathcomplete": "0.0.1",
     "lib-pathsearch": "piranna/node-lib-pathsearch",
