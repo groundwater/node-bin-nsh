@@ -11,8 +11,7 @@
   "bin": {
     "nsh": "server.js"
   },
-  "scripts":
-  {
+  "scripts": {
     "test": "mocha"
   },
   "dependencies": {
@@ -27,6 +26,7 @@
     "shell-parse": "0.0.2"
   },
   "devDependencies": {
+    "concat-stream": "^1.5.1",
     "mocha": "^2.4.5"
   }
 }
