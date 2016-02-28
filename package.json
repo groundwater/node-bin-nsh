@@ -1,7 +1,7 @@
 {
   "name": "bin-nsh",
   "version": "0.5.0",
-  "description": "Node/No Shell",
+  "description": "Node SHell",
   "author": "Jacob Groundwater <groundwater@gmail.com>",
   "contributors": [
     "Jesús Leganés Combarro 'piranna' <piranna@gmail.com>"
@@ -10,6 +10,10 @@
   "main": "lib",
   "bin": {
     "nsh": "server.js"
+  },
+  "scripts":
+  {
+    "test": "mocha"
   },
   "dependencies": {
     "array-flatten": "^2.0.0",
@@ -21,5 +25,8 @@
     "mkdirp": "~0.5.1",
     "npm-path": "piranna/npm-path",
     "shell-parse": "0.0.2"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
   }
 }
