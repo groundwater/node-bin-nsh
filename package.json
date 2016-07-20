@@ -15,10 +15,10 @@
     "test": "mocha"
   },
   "dependencies": {
-    "array-flatten": "^2.0.0",
-    "async": "^1.5.2",
+    "array-flatten": "^2.1.0",
+    "async": "^2.0.0",
     "decode-prompt": "0.0.2",
-    "glob": "~6.0.4",
+    "glob": "~7.0.5",
     "lib-pathcomplete": "0.0.1",
     "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "concat-stream": "^1.5.1",
-    "mocha": "^2.4.5",
-    "string-to-stream": "^1.0.1"
+    "mocha": "^2.5.3",
+    "string-to-stream": "^1.1.0"
   }
 }
