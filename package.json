@@ -22,8 +22,10 @@
     "lib-pathcomplete": "0.0.1",
     "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
+    "mkfifo": "^0.1.5",
     "npm-path": "piranna/npm-path",
-    "shell-parse": "0.0.2"
+    "shell-parse": "0.0.2",
+    "uuid": "^2.0.2"
   },
   "devDependencies": {
     "concat-stream": "^1.5.1",
