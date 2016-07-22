@@ -17,14 +17,14 @@
   "dependencies": {
     "array-flatten": "^2.1.0",
     "async": "^2.0.0",
-    "decode-prompt": "0.0.2",
+    "decode-prompt": "^0.0.2",
     "glob": "~7.0.5",
-    "lib-pathcomplete": "0.0.1",
+    "lib-pathcomplete": "^0.0.1",
     "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
     "mkfifo": "^0.1.5",
-    "npm-path": "piranna/npm-path",
-    "shell-parse": "0.0.2",
+    "npm-path": "^2.0.2",
+    "shell-parse": "^0.0.2",
     "uuid": "^2.0.2"
   },
   "devDependencies": {
