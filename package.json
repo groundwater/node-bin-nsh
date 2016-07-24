@@ -16,10 +16,10 @@
   },
   "dependencies": {
     "array-flatten": "^2.1.0",
-    "async": "^2.0.0",
+    "async": "^2.0.1",
     "decode-prompt": "0.0.2",
     "glob": "~7.0.5",
-    "lib-pathcomplete": "0.0.1",
+    "lib-pathcomplete": "piranna/node-lib-pathcomplete",
     "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
     "mkfifo": "^0.1.5",
