@@ -12,6 +12,7 @@
     "nsh": "server.js"
   },
   "scripts": {
+    "coveralls": "easy-coveralls",
     "test": "mocha"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "concat-stream": "^1.5.1",
+    "easy-coveralls": "0.0.0",
     "mocha": "^2.5.3",
     "string-to-stream": "^1.1.0"
   }
