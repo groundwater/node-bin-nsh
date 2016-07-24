@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "concat-stream": "^1.5.1",
-    "easy-coveralls": "0.0.0",
+    "easy-coveralls": "0.0.1",
     "mocha": "^2.5.3",
     "string-to-stream": "^1.1.0"
   }
