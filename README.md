@@ -3,7 +3,7 @@
 
 # Node SHell
 
-[![Build for NodeOS](http://i.imgur.com/pIJu2TS.png)]http://nodeos.github.io)
+[![Build for NodeOS](http://i.imgur.com/pIJu2TS.png)](http://nodeos.github.io)
 
 `nsh` is a basic POSIX compliant shell that will run without having `bash` or
 another process tidy things up first. It's also `require()`able and embedable on
