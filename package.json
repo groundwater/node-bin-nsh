@@ -18,6 +18,7 @@
   "dependencies": {
     "array-flatten": "^2.1.0",
     "async": "^2.0.1",
+    "coreutils.js": "github:piranna/coreutils.js",
     "decode-prompt": "^0.0.2",
     "glob": "~7.0.5",
     "lib-pathcomplete": "piranna/node-lib-pathcomplete",
