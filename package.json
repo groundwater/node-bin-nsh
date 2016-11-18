@@ -17,23 +17,23 @@
   },
   "dependencies": {
     "array-flatten": "^2.1.0",
-    "async": "^2.0.1",
+    "async": "^2.1.2",
     "coreutils.js": "github:piranna/coreutils.js",
     "decode-prompt": "^0.0.2",
-    "glob": "~7.0.5",
+    "glob": "~7.1.1",
     "lib-pathcomplete": "piranna/node-lib-pathcomplete",
     "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
-    "mkfifo": "^0.1.5",
+    "mkfifo": "^1.2.5",
     "npm-path": "^2.0.2",
     "shell-parse": "^0.0.2",
     "to-string-stream": "^0.1.0",
-    "uuid": "^2.0.2"
+    "uuid": "^3.0.0"
   },
   "devDependencies": {
-    "concat-stream": "^1.5.1",
+    "concat-stream": "^1.5.2",
     "easy-coveralls": "0.0.1",
-    "mocha": "^2.5.3",
+    "mocha": "^3.1.2",
     "string-to-stream": "^1.1.0"
   }
 }
