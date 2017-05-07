@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-var Nsh = require('./lib')
+var Nsh = require('.')
 
 
-Nsh(process.stdin, process.stdout)
+Nsh([process.stdin, process.stdout, process.stderr])
 .on('SIGINT', function()
 {
   this.write('^C')
