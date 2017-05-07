@@ -16,8 +16,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "array-flatten": "^2.1.0",
-    "async": "^2.1.2",
+    "array-flatten": "^2.1.1",
+    "async": "^2.4.0",
     "coreutils.js": "github:piranna/coreutils.js",
     "decode-prompt": "^0.0.2",
     "glob": "~7.1.1",
@@ -25,15 +25,15 @@
     "lib-pathsearch": "piranna/node-lib-pathsearch",
     "mkdirp": "~0.5.1",
     "mkfifo": "^1.2.5",
-    "npm-path": "^2.0.2",
+    "npm-path": "^2.0.3",
     "shell-parse": "^0.0.2",
     "to-string-stream": "^0.1.0",
-    "uuid": "^3.0.0"
+    "uuid": "^3.0.1"
   },
   "devDependencies": {
-    "concat-stream": "^1.5.2",
+    "concat-stream": "^1.6.0",
     "easy-coveralls": "0.0.1",
-    "mocha": "^3.1.2",
+    "mocha": "^3.3.0",
     "string-to-stream": "^1.1.0",
     "tmp": "0.0.31"
   }
