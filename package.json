@@ -9,7 +9,8 @@
   "license": "MIT",
   "main": "lib",
   "bin": {
-    "nsh": "server.js"
+    "nsh": "server.js",
+    "sh": "server.js"
   },
   "scripts": {
     "coveralls": "easy-coveralls",
