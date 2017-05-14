@@ -34,7 +34,7 @@
   "devDependencies": {
     "concat-stream": "^1.6.0",
     "easy-coveralls": "0.0.1",
-    "mocha": "^3.3.0",
+    "mocha": "^3.4.1",
     "string-to-stream": "^1.1.0",
     "tmp": "0.0.31"
   }
