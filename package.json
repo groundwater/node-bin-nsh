@@ -18,6 +18,7 @@
   "dependencies": {
     "array-flatten": "^2.1.1",
     "async": "^2.4.0",
+    "concat-stream": "^1.6.0",
     "coreutils.js": "github:piranna/coreutils.js",
     "decode-prompt": "^0.0.2",
     "glob": "~7.1.1",
