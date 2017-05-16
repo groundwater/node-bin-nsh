@@ -1,16 +1,12 @@
-# No(de) Shell
+[![Build Status](https://travis-ci.org/piranna/nsh.svg?branch=master)](https://travis-ci.org/piranna/nsh)
+[![Coverage Status](https://coveralls.io/repos/github/piranna/nsh/badge.svg?branch=master)](https://coveralls.io/github/piranna/nsh?branch=master)
 
-<a href="http://nodeos.github.io"><img src="http://i.imgur.com/pIJu2TS.png" width=200 height=79/></a>
+# Node SHell
 
-Both **no shell** or **node shell** accurately describe `nsh`.
+[![Built for NodeOS](http://i.imgur.com/pIJu2TS.png)](http://nodeos.github.io)
 
-The goal of `nsh` is to provide a basic shell that will run without having `bash` or another process tidy things up first.
-
-The shell needs to be able to nest without mixing up who gets what keyboard input.
-The shell should also be able to run interactive programs like *vim*.
-
-Right now node doesn't support doing proper job control, although I have a pull-request into libuv about that.
-
-- https://github.com/joyent/libuv/pull/934
-
-Features are welcome, but may not be added until I'm sure the basics are stable.
+`nsh` is a basic POSIX compliant shell that will run without having `bash` or
+another process tidy things up first. It's also `require()`able and embedable on
+other projects like [blesh](https://github.com/piranna/blesh), and has a
+collection of basic commands as build-in functions running on the same shell
+process powered by [Coreutils.js](https://github.com/piranna/Coreutils.js).
